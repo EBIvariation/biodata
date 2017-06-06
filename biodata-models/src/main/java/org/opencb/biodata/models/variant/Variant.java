@@ -273,7 +273,11 @@ public class Variant {
     public Map<String, Set<String>> getHgvs() {
         return hgvs;
     }
-    
+
+    public void setHgvs(Map<String, Set<String>> hgvs) {
+        this.hgvs = hgvs;
+    }
+
     public Set<String> getHgvs(String type) {
         return hgvs.get(type);
     }
