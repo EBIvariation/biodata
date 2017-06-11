@@ -209,6 +209,7 @@ public class Variant {
 
     public void setLength(int length) {
         this.length = length;
+        resetType();
     }
 
     public String getReference() {
@@ -219,6 +220,7 @@ public class Variant {
         this.reference = reference;
         if (reference != null && alternate != null) {
             this.length = Math.max(reference.length(), alternate.length());
+            resetType();
         }
     }
 
@@ -230,6 +232,7 @@ public class Variant {
         this.alternate = alternate;
         if (reference != null && alternate != null) {
             this.length = Math.max(reference.length(), alternate.length());
+            resetType();
         }
     }
 
