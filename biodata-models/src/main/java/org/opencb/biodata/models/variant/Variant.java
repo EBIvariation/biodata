@@ -107,9 +107,7 @@ public class Variant {
     private VariantAnnotation annotation;
 
     
-    public Variant() {
-        this("", -1, -1, "", "");
-    }
+    public Variant() { }
     
     public Variant(String chromosome, int start, int end, String reference, String alternate) {
         if (start > end && !(reference.equals("-"))) {
@@ -211,6 +209,7 @@ public class Variant {
 
     public void setLength(int length) {
         this.length = length;
+        resetType();
     }
 
     public String getReference() {
@@ -219,7 +218,10 @@ public class Variant {
 
     public void setReference(String reference) {
         this.reference = reference;
-        this.length = Math.max(reference.length(), alternate.length());
+        if (reference != null && alternate != null) {
+            this.length = Math.max(reference.length(), alternate.length());
+            resetType();
+        }
     }
 
     public String getAlternate() {
@@ -228,7 +230,10 @@ public class Variant {
 
     public void setAlternate(String alternate) {
         this.alternate = alternate;
-        this.length = Math.max(reference.length(), alternate.length());
+        if (reference != null && alternate != null) {
+            this.length = Math.max(reference.length(), alternate.length());
+            resetType();
+        }
     }
 
     @Deprecated
@@ -271,7 +276,11 @@ public class Variant {
     public Map<String, Set<String>> getHgvs() {
         return hgvs;
     }
-    
+
+    public void setHgvs(Map<String, Set<String>> hgvs) {
+        this.hgvs = hgvs;
+    }
+
     public Set<String> getHgvs(String type) {
         return hgvs.get(type);
     }
