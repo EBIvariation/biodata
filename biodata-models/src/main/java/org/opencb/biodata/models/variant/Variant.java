@@ -209,7 +209,9 @@ public class Variant {
 
     public void setLength(int length) {
         this.length = length;
-        resetType();
+        if (reference != null && alternate != null) {
+            resetType();
+        }
     }
 
     public String getReference() {
