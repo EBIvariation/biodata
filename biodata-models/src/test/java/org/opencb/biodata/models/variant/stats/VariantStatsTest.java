@@ -151,6 +151,9 @@ public class VariantStatsTest {
         VariantStats multiallelicStats_C = new VariantStats(result.get(0)).calculate(sourceEntry_C.getSamplesData(), sourceEntry_C.getAttributes(), null);
 
         assertNotNull(multiallelicStats_C);
+        // For variants with missing genotypes
+        // MAF should be set to -1 and MAF allele should be set to null
+        // See https://github.com/EBIvariation/biodata/blob/c495cf701d4514a4ca9e704bf65c6185cf32cba2/biodata-models/src/main/java/org/opencb/biodata/models/variant/stats/VariantStats.java#L548
         assertEquals(-1, (int) multiallelicStats_C.getMaf());
         assertNull(multiallelicStats_C.getMafAllele());
     }
