@@ -133,5 +133,24 @@ public class VariantStatsTest {
         VariantStats multiallelicStats_GC = new VariantStats(result.get(1)).calculate(sourceEntry_GC.getSamplesData(), sourceEntry_GC.getAttributes(), null);;
         
     }
+
+    @Test
+    public void multiallelicWithMissingGenotypeHandled() {
+        List<String> sampleNames = Arrays.asList("NA001");
+        source.setSamples(sampleNames);
+        String line = "1\t10040\trs123\tT\tA,GC\t.\tPASS\t.\tGT:GL\t"
+                + "2/-1:1,2,3,4,5,6,7,8,9,10";
+
+        List<Variant> result = new VariantVcfFactory().create(source, line);
+        assertEquals(2, result.size());
+
+        Variant variant_C = result.get(0);
+        VariantSourceEntry sourceEntry_C = variant_C.getSourceEntry(source.getFileId(), source.getStudyId());
+        VariantStats multiallelicStats_C = new VariantStats(result.get(0)).calculate(sourceEntry_C.getSamplesData(), sourceEntry_C.getAttributes(), null);
+
+        assertNotNull(multiallelicStats_C);
+        assertEquals(-1, (int) multiallelicStats_C.getMaf());
+        assertNull(multiallelicStats_C.getMafAllele());
+    }
     
 }

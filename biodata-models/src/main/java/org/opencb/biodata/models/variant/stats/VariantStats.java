@@ -426,15 +426,19 @@ public class VariantStats {
                     if (g.getAllele(0) < 0) {
                         this.setMissingAlleles(this.getMissingAlleles() + 1);
                     } else {
-                        allelesCount[g.getAllele(0)]++;
-                        totalAllelesCount++;
+                        if (g.getAllele(0) <= 1) {
+                            allelesCount[g.getAllele(0)]++;
+                            totalAllelesCount++;
+                        }
                     }
 
                     if (g.getAllele(1) < 0) {
                         this.setMissingAlleles(this.getMissingAlleles() + 1);
                     } else {
-                        allelesCount[g.getAllele(1)]++;
-                        totalAllelesCount++;
+                        if (g.getAllele(1) <= 1) {
+                            allelesCount[g.getAllele(1)]++;
+                            totalAllelesCount++;
+                        }
                     }
                     break;
 
