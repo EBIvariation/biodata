@@ -148,7 +148,7 @@ public class VariantStatsTest {
 
         Variant variant_C = result.get(0);
         VariantSourceEntry sourceEntry_C = variant_C.getSourceEntry(source.getFileId(), source.getStudyId());
-        VariantStats multiallelicStats_C = new VariantStats(result.get(0)).calculate(sourceEntry_C.getSamplesData(),
+        VariantStats multiallelicStats_C = new VariantStats(variant_C).calculate(sourceEntry_C.getSamplesData(),
                 sourceEntry_C.getAttributes(), null);
 
         assertNotNull(multiallelicStats_C);
