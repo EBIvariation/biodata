@@ -423,24 +423,26 @@ public class VariantStats {
                 default:
                     // Missing genotype (one or both alleles missing)
                     this.setMissingGenotypes(this.getMissingGenotypes() + 1);
-                    if (g.getAllele(0) < 0) {
+                    int firstAllele = g.getAllele(0);
+                    int secondAllele = g.getAllele(1);
+                    if (firstAllele < 0) {
                         this.setMissingAlleles(this.getMissingAlleles() + 1);
                     } else {
                         //Allele counts for multiple alternates not supported by biodata!
                         //Skip allele counts for genotypes like 2/-1 (getAllele(0) returns 2)
-                        if (g.getAllele(0) <= 1) {
-                            allelesCount[g.getAllele(0)]++;
+                        if (firstAllele == 0 || firstAllele == 1) {
+                            allelesCount[firstAllele]++;
                             totalAllelesCount++;
                         }
                     }
 
-                    if (g.getAllele(1) < 0) {
+                    if (secondAllele < 0) {
                         this.setMissingAlleles(this.getMissingAlleles() + 1);
                     } else {
                         //Allele counts for multiple alternates not supported by biodata!
                         //Skip allele counts for genotypes like -1/2 (getAllele(1) returns 2)
-                        if (g.getAllele(1) <= 1) {
-                            allelesCount[g.getAllele(1)]++;
+                        if (secondAllele == 0 || secondAllele == 1) {
+                            allelesCount[secondAllele]++;
                             totalAllelesCount++;
                         }
                     }
