@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.opencb.biodata.models.variant.Variant;
@@ -132,6 +134,29 @@ public class VariantStatsTest {
         VariantSourceEntry sourceEntry_GC = variant_GC.getSourceEntry(source.getFileId(), source.getStudyId());
         VariantStats multiallelicStats_GC = new VariantStats(result.get(1)).calculate(sourceEntry_GC.getSamplesData(), sourceEntry_GC.getAttributes(), null);;
         
+    }
+
+    @Test
+    public void multiallelicWithMissingGenotypeHandled() {
+        List<String> sampleNames = Arrays.asList("NA001");
+        source.setSamples(sampleNames);
+        String line = "1\t10040\trs123\tT\tA,GC\t.\tPASS\t.\tGT:GL\t"
+                + "2/-1:1,2,3,4,5,6,7,8,9,10";
+
+        List<Variant> result = new VariantVcfFactory().create(source, line);
+        assertEquals(2, result.size());
+
+        Variant variant_C = result.get(0);
+        VariantSourceEntry sourceEntry_C = variant_C.getSourceEntry(source.getFileId(), source.getStudyId());
+        VariantStats multiallelicStats_C = new VariantStats(variant_C).calculate(sourceEntry_C.getSamplesData(),
+                sourceEntry_C.getAttributes(), null);
+
+        assertNotNull(multiallelicStats_C);
+        // For variants with missing genotypes
+        // MAF should be set to -1 and MAF allele should be set to null
+        // See https://github.com/EBIvariation/biodata/blob/c495cf701d4514a4ca9e704bf65c6185cf32cba2/biodata-models/src/main/java/org/opencb/biodata/models/variant/stats/VariantStats.java#L548
+        assertEquals(-1, (int) multiallelicStats_C.getMaf());
+        assertNull(multiallelicStats_C.getMafAllele());
     }
     
 }
