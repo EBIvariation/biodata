@@ -163,8 +163,7 @@ public class VariantStatsTest {
     public void haploidWithMissingGenotypeHandled() {
         List<String> sampleNames = Arrays.asList("NA001");
         source.setSamples(sampleNames);
-        String line = "1\t10040\trs123\tT\tA\t.\tPASS\t.\tGT\t"
-                + "-1";
+        String line = "1\t10040\trs123\tT\tA\t.\tPASS\t.\tGT\t-1";
 
         List<Variant> result = new VariantVcfFactory().create(source, line);
         assertEquals(1, result.size());
