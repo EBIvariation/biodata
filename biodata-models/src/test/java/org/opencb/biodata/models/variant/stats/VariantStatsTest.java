@@ -168,11 +168,11 @@ public class VariantStatsTest {
         List<Variant> result = new VariantVcfFactory().create(source, line);
         assertEquals(1, result.size());
 
-        Variant variant_C = result.get(0);
-        VariantSourceEntry sourceEntry_C = variant_C.getSourceEntry(source.getFileId(), source.getStudyId());
-        VariantStats haploidWithMissing_C = new VariantStats(variant_C).calculate(sourceEntry_C.getSamplesData(),
-                sourceEntry_C.getAttributes(), null);
-        assertNotNull(haploidWithMissing_C);
+        Variant variant = result.get(0);
+        VariantSourceEntry sourceEntry = variant.getSourceEntry(source.getFileId(), source.getStudyId());
+        VariantStats haploidWithMissing = new VariantStats(variant).calculate(sourceEntry.getSamplesData(),
+                sourceEntry.getAttributes(), null);
+        assertNotNull(haploidWithMissing);
     }
     
 }
