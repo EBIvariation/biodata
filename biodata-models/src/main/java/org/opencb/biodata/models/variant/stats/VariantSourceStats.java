@@ -114,9 +114,11 @@ public class VariantSourceStats {
 //                    }
 //                }
                 
-                // Count homozygous (not haploid)
-                if (g.getCode() != AllelesCode.HAPLOID && g.getAllele(0) == g.getAllele(1)) {
-                    sampleStats.incrementHomozygous();
+                // Count homozygous (not haploid and no missing genotypes)
+                if (g.getCode() != AllelesCode.HAPLOID && g.getCode() != AllelesCode.ALLELES_MISSING) {
+                    if (g.getAllele(0) == g.getAllele(1)) {
+                        sampleStats.incrementHomozygous();
+                    }
                 }
             }
         }
