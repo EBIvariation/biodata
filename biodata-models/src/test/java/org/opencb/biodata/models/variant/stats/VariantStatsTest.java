@@ -158,5 +158,21 @@ public class VariantStatsTest {
         assertEquals(-1, (int) multiallelicStats_C.getMaf());
         assertNull(multiallelicStats_C.getMafAllele());
     }
+
+    @Test
+    public void haploidWithMissingGenotypeHandled() {
+        List<String> sampleNames = Arrays.asList("NA001");
+        source.setSamples(sampleNames);
+        String line = "1\t10040\trs123\tT\tA\t.\tPASS\t.\tGT\t-1";
+
+        List<Variant> result = new VariantVcfFactory().create(source, line);
+        assertEquals(1, result.size());
+
+        Variant variant = result.get(0);
+        VariantSourceEntry sourceEntry = variant.getSourceEntry(source.getFileId(), source.getStudyId());
+        VariantStats haploidWithMissing = new VariantStats(variant).calculate(sourceEntry.getSamplesData(),
+                sourceEntry.getAttributes(), null);
+        assertNotNull(haploidWithMissing);
+    }
     
 }
